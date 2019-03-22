@@ -36,11 +36,12 @@ public:
 
     void setPos(const unsigned posx, const unsigned posy, T obj) {
         value[posx][posy] = obj;
-    }
+    };
     char getPos (const unsigned posx, const unsigned posy) {
         return value[posx][posy];
     };
 
+    friend ostream& operator<<(ostream& stream, TwoDimArray<char>& TwoDArray);
 private:
     unsigned length;
     unsigned width;
@@ -49,8 +50,8 @@ private:
 
 //overload >> operator
     ostream& operator<<(ostream& stream, TwoDimArray<char>& TwoDArray) {
-        for (auto i = 0; i < 5; i++){
-            for (auto j = 0; j < 10; j++){
+        for (auto i = 0; i < TwoDArray.length; i++){
+            for (auto j = 0; j < TwoDArray.width; j++){
                 stream << TwoDArray.getPos(i,j);
             }
             cout << endl;
@@ -60,7 +61,6 @@ private:
 
     ifstream& operator>> (ifstream &file, TwoDimArray<char> &TwoDArray) {
     unsigned len, wth;
-    char ch;
     file >> len >> wth;
     TwoDimArray<char> mapLocal(len, wth);
     TwoDArray = mapLocal;
@@ -68,14 +68,12 @@ private:
     getline(file,buf);
     for (auto i = 0; i < len ; i++)
         for (auto j = 0; j <= wth; j++){
-            //if(file.get() != '\n'){
                 TwoDArray.setPos(i,j,file.get());
-
         }
     }
 
 int main() {
-    //TCODConsole::initRoot(80,60,"AlexSmith's Sokoban", false, TCOD_RENDERER_GLSL);
+    TCODConsole::initRoot(80,60,"AlexSmith's Sokoban", false, TCOD_RENDERER_GLSL);
     TwoDimArray<char> Test;
     in >> Test;
     cout << Test;
