@@ -29,20 +29,21 @@ public:
     }
 
     ~TwoDimArray() {}
-        /*for(auto i = 0; i < length; i++){
+       /* for(auto i = 0; i < length; i++){
             delete value[i];
         }
         delete[] value;*/
 
-    void setPos(const unsigned posx, const unsigned posy, T obj) {
-        value[posx][posy] = obj;
+    void setPos(const unsigned posX, const unsigned posY, T obj) {
+        value[posX][posY] = obj;
     };
-    char getPos (const unsigned posx, const unsigned posy) {
-        return value[posx][posy];
+    char getPos (const unsigned posX, const unsigned posY) const{
+        return value[posX][posY];
     };
 
-    friend ostream& operator<<(ostream& stream, TwoDimArray<char>& TwoDArray);
-    friend ifstream& operator>> (ifstream &file, TwoDimArray<char> &TwoDArray);
+    friend ostream& operator<< (ostream& stream, TwoDimArray<T>& TwoDArray);
+    friend ifstream& operator>> (ifstream &file, TwoDimArray<T> &TwoDArray);
+
 private:
     unsigned length;
     unsigned width;
@@ -50,17 +51,18 @@ private:
 };
 
 //overload >> operator
-    ostream& operator<<(ostream& stream, TwoDimArray<char>& TwoDArray) {
-        for (auto i = 0; i < TwoDArray.length; i++){
-            for (auto j = 0; j < TwoDArray.width; j++){
-                stream << TwoDArray.getPos(i,j);
-            }
-            cout << endl;
-        }
-        return stream;
-    }
 
-    ifstream& operator>> (ifstream &file, TwoDimArray<char> &TwoDArray) {
+ostream& operator<<(ostream& stream, TwoDimArray<char>& TwoDArray) {
+    for (auto i = 0; i < TwoDArray.length; i++){
+        for (auto j = 0; j < TwoDArray.width; j++){
+            stream << TwoDArray.getPos(i,j);
+        }
+        cout << endl;
+    }
+    return stream;
+}
+
+ifstream& operator>> (ifstream &file, TwoDimArray<char> &TwoDArray) {
     unsigned len, wth;
     file >> len >> wth;
     TwoDimArray<char> mapLocal(len, wth);
@@ -69,9 +71,10 @@ private:
     getline(file,buf);
     for (auto i = 0; i < len ; i++)
         for (auto j = 0; j <= wth; j++){
-                TwoDArray.setPos(i,j,file.get());
+            TwoDArray.setPos(i,j,file.get());
         }
-    }
+}
+
 
 int main() {
     TCODConsole::initRoot(80,60,"AlexSmith's Sokoban", false, TCOD_RENDERER_GLSL);
