@@ -5,11 +5,8 @@ using std::string;
 using std::cout;
 using std::endl;
 
-void print(const char *cp){
-    if(cp)
-        while(*cp)
-            cout << *cp++;
-}
+struct Sales_data {};
+};
 int main() {
 
     //TCODConsole::setCustomFont("standard_8x8_ascii_in_col_font.bmp",TCOD_FONT_LAYOUT_ASCII_INCOL);
