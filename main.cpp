@@ -5,16 +5,37 @@ using std::string;
 using std::cout;
 using std::endl;
 
-struct Sales_data {};
+template <typename T>
+class TwoDimArray {
+public:
+    TwoDimArray() = default;
+    TwoDimArray(T argValue, unsigned argLen, unsigned argWth) : length(argLen), width(argWth)
+    {
+        value = new T *[length];
+        for (auto row : value)
+        {
+            row = new T[argWth];
+        }
+    }
+
+    void setArray(const unsigned len, const unsigned wth, char *Array) {
+        length = len;
+        width = wth;
+
+    }
+    TwoDimArray getArray () {
+        return this;
+    };
+private:
+    unsigned length;
+    unsigned width;
+    T **value;
 };
+
 int main() {
+    TCODConsole::initRoot(80,60,"AlexSmith's Sokoban", false, TCOD_RENDERER_GLSL);
 
-    //TCODConsole::setCustomFont("standard_8x8_ascii_in_col_font.bmp",TCOD_FONT_LAYOUT_ASCII_INCOL);
-    char *str = "string";
 
-    //TCODConsole::initRoot(80,60,"AlexSmith's Sokoban", false, TCOD_RENDERER_GLSL);
-    //TCODConsole::root -> TCODConsole::vline(0,0, 40, TCOD_BKGND_ALPHA(1));
-   print(str);
 
 
     return 0;
