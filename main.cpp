@@ -42,6 +42,7 @@ public:
     };
 
     friend ostream& operator<<(ostream& stream, TwoDimArray<char>& TwoDArray);
+    friend ifstream& operator>> (ifstream &file, TwoDimArray<char> &TwoDArray);
 private:
     unsigned length;
     unsigned width;
