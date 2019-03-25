@@ -4,6 +4,7 @@
 #include <fstream>
 #include <ostream>
 #include <vector>
+#include <map>
 using std::string;
 using std::cout;
 using std::endl;
@@ -103,6 +104,9 @@ int main() {
     in >> Test;
     vector<int> tmpPlrPos;
     Box box1, box2;
+    vector<int> WinPos;
+    std::map<vector<int>,char> mapCharWin;
+    unsigned winCnt = 0;
 
     TCODConsole::initRoot(Test.getDimX(),Test.getDimY(),"AlexSmith's Sokoban", false, TCOD_RENDERER_GLSL);
     TCODConsole::root->setDefaultBackground({0,0,0});
@@ -129,13 +133,33 @@ int main() {
            }
            else if (TCODConsole::root -> getChar(j, i) == 'X'){
                TCODConsole::root->setCharBackground(j,i,{255,255,255});
+               mapCharWin[{j,i}] = 'X';
            }
 
         }
     }
     TCODConsole::root->flush();
         while (4) {
+            for (auto cross : mapCharWin){
+                if (TCODConsole::root -> getChar(cross.first[0],cross.first[1]) == 'X') {
+                    TCODConsole::root->setCharBackground(cross.first[0],cross.first[1],{255,255,255});
+                }
+                else if(TCODConsole::root -> getChar(cross.first[0],cross.first[1]) ==  'B') {
+                    TCODConsole::root->setCharBackground(cross.first[0],cross.first[1],{255,255,0});
+
+                }
+                else if(TCODConsole::root -> getChar(cross.first[0],cross.first[1]) ==  'P') {
+                    TCODConsole::root->setCharBackground(cross.first[0],cross.first[1],{0,255,0});
+                }
+                else if(TCODConsole::root -> getChar(cross.first[0],cross.first[1]) ==  ' ') {
+                    TCODConsole::root -> setChar(cross.first[0],cross.first[1], 'X');
+                    TCODConsole::root->setCharBackground(cross.first[0],cross.first[1],{255,255,255});
+
+                }
+            }
             TCOD_key_t key = TCODConsole::checkForKeypress();
+
+            TCODConsole::root->flush();
             if ( key.c == 'w' || key.c == 'W' ) {
                 if (TCODConsole::root -> getChar(tmpPlrPos[0], tmpPlrPos[1] - 1) != '#'){
                     if (TCODConsole::root -> getChar(tmpPlrPos[0], tmpPlrPos[1] - 1) != 'B'){
@@ -145,6 +169,14 @@ int main() {
                         TCODConsole::root->setCharBackground(tmpPlrPos[0], tmpPlrPos[1],{0,0,0});
                         tmpPlrPos = {tmpPlrPos[0], tmpPlrPos[1] - 1};
                     }
+                    /*else if ((TCODConsole::root -> getChar(tmpPlrPos[0], tmpPlrPos[1] - 1) == 'X')){
+                        TCODConsole::root -> setChar(tmpPlrPos[0], tmpPlrPos[1] - 1, 'P');
+                        TCODConsole::root->setCharBackground(tmpPlrPos[0], tmpPlrPos[1] - 1,{0,255,0});
+                        TCODConsole::root-> setChar(tmpPlrPos[0], tmpPlrPos[1], ' ');
+
+                        tmpPlrPos = {tmpPlrPos[0], tmpPlrPos[1] - 1};
+
+                    }*/
                     else if ((TCODConsole::root -> getChar(tmpPlrPos[0], tmpPlrPos[1] - 1) == 'B')
                     && (TCODConsole::root -> getChar(tmpPlrPos[0], tmpPlrPos[1] - 2) != '#')
                     && (TCODConsole::root -> getChar(tmpPlrPos[0], tmpPlrPos[1] - 2) != 'B')){
