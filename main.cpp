@@ -264,7 +264,10 @@ int main() {
             }
 
         }
-
+    TCODConsole::initRoot(Test.getDimX()/2,Test.getDimY()/2,"Winner", false, TCOD_RENDERER_GLSL);
+    while (1) {
+        TCODConsole::root->flush();
+    }
     return 0;
 }
 
