@@ -21,48 +21,10 @@ using std::getline;
 
 
 
-//implementation of the template class of 2DArray
-/*template <typename T> class TwoDimArray {
-public:
-    TwoDimArray() = default;
-
-    TwoDimArray(const unsigned argLen,const unsigned argWth) : length(argLen), width(argWth)
-    {
-        value = new T *[length];
-        for (auto i = 0; i < length; i++){
-            value[i] = new T[width] {};
-        }
-    }
-
-    ~TwoDimArray() {}
 
 
-    void setObjPos(const unsigned posX, const unsigned posY, T obj) {
-        value[posX][posY] = obj;
-    }
-    char getObjPos (const unsigned posX, const unsigned posY) const{
-        return value[posX][posY];
-    }
 
-    unsigned  getDimX() const {
-        return width;
-    }
-
-    unsigned  getDimY() const {
-        return length;
-    }
-
-    friend ostream& operator<< (ostream& stream, TwoDimArray<char>& TwoDArray);
-    friend ifstream& operator>> (ifstream &file, TwoDimArray<char>& TwoDArray);
-
-private:
-    unsigned length;
-    unsigned width;
-    T **value;
-};*/
-
-//overload >> operator
-
+//overload << operator
 ostream& operator<<(ostream& stream, TwoDimArray<char>& TwoDArray) {
     for (auto i = 0; i < TwoDArray.length; i++){
         for (auto j = 0; j < TwoDArray.width; j++){
@@ -73,6 +35,7 @@ ostream& operator<<(ostream& stream, TwoDimArray<char>& TwoDArray) {
     return stream;
 }
 
+//overload >> operator
 ifstream& operator>> (ifstream &file, TwoDimArray<char> &TwoDArray) {
     unsigned len, wth;
     file >> len >> wth;
