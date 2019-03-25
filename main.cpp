@@ -5,7 +5,10 @@
 #include <ostream>
 #include <vector>
 #include <map>
+
+
 using std::string;
+using std::map;
 using std::cout;
 using std::endl;
 using std::cin;
@@ -15,11 +18,10 @@ using std::ostream;
 using std::fstream;
 using std::getline;
 
-ifstream in("TestMap.txt");
+
 
 //implementation of the template class of 2DArray
-template <typename T>
-class TwoDimArray {
+template <typename T> class TwoDimArray {
 public:
     TwoDimArray() = default;
 
@@ -32,10 +34,7 @@ public:
     }
 
     ~TwoDimArray() {}
-       /* for(auto i = 0; i < length; i++){
-            delete value[i];
-        }
-        delete[] value;*/
+
 
     void setObjPos(const unsigned posX, const unsigned posY, T obj) {
         value[posX][posY] = obj;
@@ -52,8 +51,8 @@ public:
         return length;
     }
 
-    friend ostream& operator<< (ostream& stream, TwoDimArray<T>& TwoDArray);
-    friend ifstream& operator>> (ifstream &file, TwoDimArray<T> &TwoDArray);
+    friend ostream& operator<< (ostream& stream, TwoDimArray<char>& TwoDArray);
+    friend ifstream& operator>> (ifstream &file, TwoDimArray<char>& TwoDArray);
 
 private:
     unsigned length;
@@ -87,26 +86,17 @@ ifstream& operator>> (ifstream &file, TwoDimArray<char> &TwoDArray) {
     }
 }
 
-class Box{
-public:
-    void setPos(const vector<int>& newPos){
-        Pos = newPos;
-    };
-    vector<int> getPos() const {
-        return Pos;
-    };
-private:
-    vector<int> Pos;
-};
+
 
 int main() {
+    ifstream in("TestMap.txt");
+
     TwoDimArray<char> Test;
     in >> Test;
     vector<int> tmpPlrPos;
-    Box box1, box2;
     vector<int> WinPos;
     std::map<vector<int>,char> mapCharWin;
-    unsigned winCnt = 0;
+
 
     TCODConsole::initRoot(Test.getDimX(),Test.getDimY(),"AlexSmith's Sokoban", false, TCOD_RENDERER_GLSL);
     TCODConsole::root->setDefaultBackground({0,0,0});
@@ -135,28 +125,29 @@ int main() {
                TCODConsole::root->setCharBackground(j,i,{255,255,255});
                mapCharWin[{j,i}] = 'X';
            }
-
         }
     }
     TCODConsole::root->flush();
         while (4) {
-            for (auto cross : mapCharWin){
+            for (auto& cross : mapCharWin){
                 if (TCODConsole::root -> getChar(cross.first[0],cross.first[1]) == 'X') {
                     TCODConsole::root->setCharBackground(cross.first[0],cross.first[1],{255,255,255});
+                    cross.second = 'X';
                 }
                 else if(TCODConsole::root -> getChar(cross.first[0],cross.first[1]) ==  'B') {
                     TCODConsole::root->setCharBackground(cross.first[0],cross.first[1],{255,255,0});
-
+                    cross.second = 'B';
                 }
                 else if(TCODConsole::root -> getChar(cross.first[0],cross.first[1]) ==  'P') {
                     TCODConsole::root->setCharBackground(cross.first[0],cross.first[1],{0,255,0});
+                    cross.second = 'P';
                 }
                 else if(TCODConsole::root -> getChar(cross.first[0],cross.first[1]) ==  ' ') {
                     TCODConsole::root -> setChar(cross.first[0],cross.first[1], 'X');
                     TCODConsole::root->setCharBackground(cross.first[0],cross.first[1],{255,255,255});
-
                 }
             }
+
             TCOD_key_t key = TCODConsole::checkForKeypress();
 
             TCODConsole::root->flush();
@@ -169,14 +160,6 @@ int main() {
                         TCODConsole::root->setCharBackground(tmpPlrPos[0], tmpPlrPos[1],{0,0,0});
                         tmpPlrPos = {tmpPlrPos[0], tmpPlrPos[1] - 1};
                     }
-                    /*else if ((TCODConsole::root -> getChar(tmpPlrPos[0], tmpPlrPos[1] - 1) == 'X')){
-                        TCODConsole::root -> setChar(tmpPlrPos[0], tmpPlrPos[1] - 1, 'P');
-                        TCODConsole::root->setCharBackground(tmpPlrPos[0], tmpPlrPos[1] - 1,{0,255,0});
-                        TCODConsole::root-> setChar(tmpPlrPos[0], tmpPlrPos[1], ' ');
-
-                        tmpPlrPos = {tmpPlrPos[0], tmpPlrPos[1] - 1};
-
-                    }*/
                     else if ((TCODConsole::root -> getChar(tmpPlrPos[0], tmpPlrPos[1] - 1) == 'B')
                     && (TCODConsole::root -> getChar(tmpPlrPos[0], tmpPlrPos[1] - 2) != '#')
                     && (TCODConsole::root -> getChar(tmpPlrPos[0], tmpPlrPos[1] - 2) != 'B')){
@@ -270,42 +253,18 @@ int main() {
                 }
                 TCODConsole::root->flush();
             }
-
+            decltype(mapCharWin.size()) winCnt = 0;
+            for (auto cross : mapCharWin){
+                if (cross.second == 'B'){
+                    winCnt++;
+                }
+            }
+            if (winCnt == mapCharWin.size()) {
+                break;
+            }
 
         }
-
-
-
 
     return 0;
 }
 
-//legacy
-
-//that function reads txt file and load dimensions of map
-//and store them into len and wth
-// although store strings in map into 1-dim array of chars
-/*void readMap(const string& filename) {
-    unsigned len, wth, dim, i = 0;
-    char ch;
-    fstream mapFile;
-    mapFile.open(filename);
-    if (mapFile) {
-        mapFile >> len >> wth;
-    }
-    dim = wth*len;
-    const char *strArr[dim];
-    //mapFile.get(ch);
-    while(i < dim){
-
-        mapFile.get(ch);
-        *(strArr + i++) = &ch;
-
-
-
-    }
-
-    for (auto c : strArr)
-        cout << c << " ";
-    return;
-}*/
