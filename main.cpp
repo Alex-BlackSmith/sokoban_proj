@@ -153,38 +153,81 @@ int main() {
                         TCODConsole::root->setCharBackground(tmpPlrPos[0], tmpPlrPos[1] - 2,{255,255,0});
 
                         tmpPlrPos = {tmpPlrPos[0], tmpPlrPos[1] - 1};
-
                     }
                 }
                 TCODConsole::root->flush();
             }
             else if ( key.c == 'a' || key.c == 'A' ) {
                 if (TCODConsole::root -> getChar(tmpPlrPos[0] - 1, tmpPlrPos[1]) != '#'){
-                    TCODConsole::root -> setChar(tmpPlrPos[0] - 1, tmpPlrPos[1], 'P');
-                    TCODConsole::root->setCharBackground(tmpPlrPos[0] - 1, tmpPlrPos[1],{0,255,0});
-                    TCODConsole::root -> setChar(tmpPlrPos[0], tmpPlrPos[1], ' ');
-                    TCODConsole::root->setCharBackground(tmpPlrPos[0], tmpPlrPos[1],{0,0,0});
-                    tmpPlrPos = {tmpPlrPos[0] - 1, tmpPlrPos[1]};
+                    if (TCODConsole::root -> getChar(tmpPlrPos[0] - 1, tmpPlrPos[1]) != 'B'){
+                        TCODConsole::root -> setChar(tmpPlrPos[0] - 1, tmpPlrPos[1], 'P');
+                        TCODConsole::root->setCharBackground(tmpPlrPos[0] - 1, tmpPlrPos[1],{0,255,0});
+                        TCODConsole::root -> setChar(tmpPlrPos[0], tmpPlrPos[1], ' ');
+                        TCODConsole::root->setCharBackground(tmpPlrPos[0], tmpPlrPos[1],{0,0,0});
+                        tmpPlrPos = {tmpPlrPos[0] - 1, tmpPlrPos[1]};
+                }
+
+                else if ((TCODConsole::root -> getChar(tmpPlrPos[0] - 1, tmpPlrPos[1]) == 'B')
+                             && TCODConsole::root -> getChar(tmpPlrPos[0] - 2, tmpPlrPos[1]) != '#'){
+                        TCODConsole::root -> setChar(tmpPlrPos[0] - 1, tmpPlrPos[1], 'P');
+                        TCODConsole::root->setCharBackground(tmpPlrPos[0] - 1, tmpPlrPos[1],{0,255,0});
+                        TCODConsole::root-> setChar(tmpPlrPos[0], tmpPlrPos[1], ' ');
+                        TCODConsole::root->setCharBackground(tmpPlrPos[0], tmpPlrPos[1],{0,0,0});
+
+                        TCODConsole::root -> setChar(tmpPlrPos[0] - 2, tmpPlrPos[1], 'B');
+                        TCODConsole::root->setCharBackground(tmpPlrPos[0] - 2, tmpPlrPos[1],{255,255,0});
+
+                        tmpPlrPos = {tmpPlrPos[0] - 1, tmpPlrPos[1]};
+                    }
                 }
                 TCODConsole::root->flush();
             }
             else if ( key.c == 's' || key.c == 'S' ) {
                 if (TCODConsole::root -> getChar(tmpPlrPos[0], tmpPlrPos[1] + 1) != '#'){
-                    TCODConsole::root -> setChar(tmpPlrPos[0], tmpPlrPos[1] + 1, 'P');
-                    TCODConsole::root->setCharBackground(tmpPlrPos[0], tmpPlrPos[1] + 1,{0,255,0});
-                    TCODConsole::root -> setChar(tmpPlrPos[0], tmpPlrPos[1], ' ');
-                    TCODConsole::root->setCharBackground(tmpPlrPos[0], tmpPlrPos[1],{0,0,0});
-                    tmpPlrPos = {tmpPlrPos[0], tmpPlrPos[1] + 1};
+                    if (TCODConsole::root -> getChar(tmpPlrPos[0], tmpPlrPos[1] + 1) != 'B'){
+                        TCODConsole::root -> setChar(tmpPlrPos[0], tmpPlrPos[1] + 1, 'P');
+                        TCODConsole::root->setCharBackground(tmpPlrPos[0], tmpPlrPos[1] + 1,{0,255,0});
+                        TCODConsole::root-> setChar(tmpPlrPos[0], tmpPlrPos[1], ' ');
+                        TCODConsole::root->setCharBackground(tmpPlrPos[0], tmpPlrPos[1],{0,0,0});
+                        tmpPlrPos = {tmpPlrPos[0], tmpPlrPos[1] + 1};
+                    }
+                    else if ((TCODConsole::root -> getChar(tmpPlrPos[0], tmpPlrPos[1] + 1) == 'B')
+                             && TCODConsole::root -> getChar(tmpPlrPos[0], tmpPlrPos[1] + 2) != '#'){
+                        TCODConsole::root -> setChar(tmpPlrPos[0], tmpPlrPos[1] + 1, 'P');
+                        TCODConsole::root->setCharBackground(tmpPlrPos[0], tmpPlrPos[1] + 1,{0,255,0});
+                        TCODConsole::root-> setChar(tmpPlrPos[0], tmpPlrPos[1], ' ');
+                        TCODConsole::root->setCharBackground(tmpPlrPos[0], tmpPlrPos[1],{0,0,0});
+
+                        TCODConsole::root -> setChar(tmpPlrPos[0], tmpPlrPos[1] + 2, 'B');
+                        TCODConsole::root->setCharBackground(tmpPlrPos[0], tmpPlrPos[1] + 2,{255,255,0});
+
+                        tmpPlrPos = {tmpPlrPos[0], tmpPlrPos[1] + 1};
+                    }
                 }
                 TCODConsole::root->flush();
             }
             else if ( key.c == 'd' || key.c == 'D' ) {
                 if (TCODConsole::root -> getChar(tmpPlrPos[0] + 1, tmpPlrPos[1]) != '#'){
-                    TCODConsole::root -> setChar(tmpPlrPos[0] + 1, tmpPlrPos[1], 'P');
-                    TCODConsole::root->setCharBackground(tmpPlrPos[0] + 1, tmpPlrPos[1],{0,255,0});
-                    TCODConsole::root -> setChar(tmpPlrPos[0], tmpPlrPos[1], ' ');
-                    TCODConsole::root->setCharBackground(tmpPlrPos[0], tmpPlrPos[1],{0,0,0});
-                    tmpPlrPos = {tmpPlrPos[0] + 1, tmpPlrPos[1]};
+                    if (TCODConsole::root -> getChar(tmpPlrPos[0] + 1, tmpPlrPos[1]) != 'B'){
+                        TCODConsole::root -> setChar(tmpPlrPos[0] + 1, tmpPlrPos[1], 'P');
+                        TCODConsole::root->setCharBackground(tmpPlrPos[0] + 1, tmpPlrPos[1],{0,255,0});
+                        TCODConsole::root -> setChar(tmpPlrPos[0], tmpPlrPos[1], ' ');
+                        TCODConsole::root->setCharBackground(tmpPlrPos[0], tmpPlrPos[1],{0,0,0});
+                        tmpPlrPos = {tmpPlrPos[0] + 1, tmpPlrPos[1]};
+                    }
+
+                    else if ((TCODConsole::root -> getChar(tmpPlrPos[0] + 1, tmpPlrPos[1]) == 'B')
+                             && TCODConsole::root -> getChar(tmpPlrPos[0] + 2, tmpPlrPos[1]) != '#'){
+                        TCODConsole::root -> setChar(tmpPlrPos[0] + 1, tmpPlrPos[1], 'P');
+                        TCODConsole::root->setCharBackground(tmpPlrPos[0] + 1, tmpPlrPos[1],{0,255,0});
+                        TCODConsole::root-> setChar(tmpPlrPos[0], tmpPlrPos[1], ' ');
+                        TCODConsole::root->setCharBackground(tmpPlrPos[0], tmpPlrPos[1],{0,0,0});
+
+                        TCODConsole::root -> setChar(tmpPlrPos[0] + 2, tmpPlrPos[1], 'B');
+                        TCODConsole::root->setCharBackground(tmpPlrPos[0] + 2, tmpPlrPos[1],{255,255,0});
+
+                        tmpPlrPos = {tmpPlrPos[0] + 1, tmpPlrPos[1]};
+                    }
                 }
                 TCODConsole::root->flush();
             }
