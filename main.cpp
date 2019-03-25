@@ -264,8 +264,12 @@ int main() {
             }
 
         }
-    TCODConsole::initRoot(Test.getDimX()/2,Test.getDimY()/2,"Winner", false, TCOD_RENDERER_GLSL);
+    TCODConsole::initRoot(Test.getDimX(),Test.getDimY(),"Winner", false, TCOD_RENDERER_GLSL);
+    TCODMap * map = new TCODMap(50,50); // allocate the map
+    map->setProperties(10,10,true,true);
     while (1) {
+        TCODConsole::root->print(19,25,"Hello %c%c%c%c%c%c%c%cworld%c!",
+                                 TCOD_COLCTRL_FORE_RGB,255,1,1,TCOD_COLCTRL_BACK_RGB,1,255,1,TCOD_COLCTRL_STOP);
         TCODConsole::root->flush();
     }
     return 0;
