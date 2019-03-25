@@ -36,10 +36,18 @@ public:
 
     void setPos(const unsigned posX, const unsigned posY, T obj) {
         value[posX][posY] = obj;
-    };
+    }
     char getPos (const unsigned posX, const unsigned posY) const{
         return value[posX][posY];
-    };
+    }
+
+    unsigned  getDimX() const {
+        return width;
+    }
+
+    unsigned  getDimY() const {
+        return length;
+    }
 
     friend ostream& operator<< (ostream& stream, TwoDimArray<T>& TwoDArray);
     friend ifstream& operator>> (ifstream &file, TwoDimArray<T> &TwoDArray);
@@ -75,12 +83,44 @@ ifstream& operator>> (ifstream &file, TwoDimArray<char> &TwoDArray) {
         }
 }
 
+class objColors{
+
+};
 
 int main() {
-    TCODConsole::initRoot(80,60,"AlexSmith's Sokoban", false, TCOD_RENDERER_GLSL);
     TwoDimArray<char> Test;
     in >> Test;
-    cout << Test;
+
+
+    TCODConsole::initRoot(20,20,"AlexSmith's Sokoban", false, TCOD_RENDERER_GLSL);
+    TCODConsole::root->setDefaultBackground({0,0,0});
+    for (auto i = 0; i < Test.getDimX(); i++)
+        for (auto j = 0; j < Test.getDimY(); j++){
+            TCODConsole::root -> setChar(j, i, Test.getPos(i,j));
+           // TCODConsole::root->setCharBackground(j,i,);
+        }
+    for (auto i = 0; i < Test.getDimX(); i++)
+        for (auto j = 0; j < Test.getDimY(); j++){
+
+           if (TCODConsole::root -> getChar(j, i) == 'P'){
+               TCODConsole::root->setCharBackground(j,i,{0,255,0});
+           }
+           else if (TCODConsole::root -> getChar(j, i) == '#'){
+               TCODConsole::root->setCharBackground(j,i,{255,0,0});
+           }
+           else if (TCODConsole::root -> getChar(j, i) == 'B'){
+                TCODConsole::root->setCharBackground(j,i,{250,250,0});
+           }
+           else if (TCODConsole::root -> getChar(j, i) == 'X'){
+               TCODConsole::root->setCharBackground(j,i,{255,255,255});
+           }
+            TCODConsole::root -> flush();
+        }
+
+
+        TCODConsole::root -> clear();
+
+
     return 0;
 }
 
