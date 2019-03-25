@@ -1,0 +1,1 @@
+/usr/bin/c++  -g   CMakeFiles/sokoban_proj.dir/main.cpp.o CMakeFiles/sokoban_proj.dir/TwoDimArray.cpp.o  -o sokoban_proj  -L/home/akuznetsov/libtcod  -L/home/akuznetsov/sokoban_proj/cmake-build-debug -Wl,-rpath,/home/akuznetsov/libtcod:/home/akuznetsov/sokoban_proj/cmake-build-debug -ltcod -ltcodxx 
